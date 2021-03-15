@@ -7,8 +7,8 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/budget", {
 
 const transactionSeed = [
   {
-    name: "Test",
-    value: 1000,
+    name: "Paycheck",
+    value: 3200,
     date: Date.now,
   },
 ];
