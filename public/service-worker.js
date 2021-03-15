@@ -11,23 +11,23 @@ const FILES_TO_CACHE = [
 const CACHE_NAME = "static-cache-v2";
 const DATA_CACHE_NAME = "data-cache-v1";
 
-// install and register your service worker
+// Install and register your service worker
 self.addEventListener("install", function (evt) {
   evt.waitUntil(
     caches.open(DATA_CACHE_NAME).then((cache) => cache.add("/api/transaction"))
   );
 
-  // pre cache all static assets
-  // evt.waitUntil(
-  //   caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE))
-  // ); //@audit-issue
-  // console.log("Your files were pre-cached successfully!");
+  // Pre cache all static assets
+  /* evt.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE))); 
+          console.log("Your files were pre-cached successfully!");
+    */
 
-  // tell the browser to activate this service worker immediately once it has finished installing
+  // Tell the browser to activate this service worker immediately once it has finished installing
   self.skipWaiting();
 });
 
-// activate the service worker and remove old data from the cache
+// Activate the service worker and remove old data from the cache
 self.addEventListener("activate", function (evt) {
   evt.waitUntil(
     caches.keys().then((keyList) => {
@@ -45,10 +45,10 @@ self.addEventListener("activate", function (evt) {
   self.clients.claim();
 });
 
-//enable service worker to intercept network requests
-// fetch
+// Fetch/ Enable service worker to intercept network requests
 self.addEventListener("fetch", function (evt) {
   // code to handle the request
+
   if (evt.request.url.includes("/api/")) {
     console.log("[Service Worker] Fetch (data)", evt.request.url);
 
@@ -59,6 +59,7 @@ self.addEventListener("fetch", function (evt) {
           return fetch(evt.request)
             .then((response) => {
               // if response good, clone it and store it in cache
+
               if (response.status === 200) {
                 cache.put(evt.request.url, response.clone());
               }
@@ -74,9 +75,10 @@ self.addEventListener("fetch", function (evt) {
     return;
   }
 
-  // serve static files from the cache, proceed with a network req when the resource is not in the cache - allows the page to be accessible offline
+  // Serve static files from the cache, proceed with a network request when the resource is not in the cache - Allows the page to be accessible offline
   evt.respondWith(
     // @audit-issue "the FetchEvent for http://localhost:3000/ resulted in a network error response: the promise was rejected" Promise.then (async) (anonymous) at line 78
+
     caches.open(CACHE_NAME).then((cache) => {
       return cache.match(evt.request).then((response) => {
         return response || fetch(evt.request);
