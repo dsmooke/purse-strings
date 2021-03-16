@@ -1,4 +1,4 @@
 node_modules
 .DS_Store
-draft-service-worker.js
+offline-experience-code.js
 budgetDB.mongodb
