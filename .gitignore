@@ -2,3 +2,4 @@ node_modules
 .DS_Store
 offline-experience-code.js
 budgetDB.mongodb
+public/compressions
