@@ -14,8 +14,6 @@
 
 A budget tracker application that allows user to add expenses and deposits to their budget with or without a connection. Offline transactions will populate total when back online.
 
-This is the eighteenth assignment for the UConn Coding Boot Camp curriculum.
-
 View the deployed application [here](https://purse-strings.herokuapp.com/).
 
 ![main-demo](/public/imgs/budget-main-demo.png)
